@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Attendance Dashboard</title>
+  <style>
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background-color: #000;
+      font-family: Arial, sans-serif;
+      /* Set a default light text color for headers and buttons */
+      color: #fff;
+    }
+    /* Header with centered heading and header image */
+    header {
+      padding: 15px;
+      text-align: center;
+      position: relative;
+    }
+    .dashboard-heading {
+      font-size: 36px;
+      margin-bottom: 20px;
+      color: #fff;
+    }
+    /* Header image (square with rounded edges) */
+    .header-image {
+      position: absolute;
+      right: 100px; /* Adjusted offset */
+      top: 50%;
+      transform: translateY(-50%);
+      width: 150px;
+      height: 100px;
+      border-radius: 15px;
+      overflow: hidden;
+      border: 2px solid #bfbb6c;
+      margin-top:15px;
+    }
+    .header-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    header2 {
+      padding: 15px;
+      text-align: left;
+    }
+    .student-info-btn {
+      background-color: #000;
+      color: #fff;
+      border: none;
+      font-size: 30px;
+      font-weight: bold;
+      font-style: italic;
+      padding: 20px 20px;
+      text-decoration: none;
+    }
+    .student-info-btn:hover {
+      color: #ccc;
+    }
+    /* Main container with two sections */
+    .main-container {
+      display: flex;
+      margin: 30px;
+    }
+    /* LEFT SECTION */
+    .left-section {
+      width: 75%;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: auto auto;
+      gap: 20px;
+      margin-bottom: 50px;
+    }
+    /* Info boxes for Attendance, Give Attendance, Upcoming Class */
+    .info-box {
+      background-color: rgb(255, 211, 181); /* soft light orange */
+      border: 2px solid #81c784; /* gentle green */
+      border-radius: 8px;
+      padding: 20px;
+      text-align: center;
+      height: 200px; /* increased height */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .info-box h2 {
+      font-size: 20px;
+      margin-bottom: 15px;
+      color: #4e342e; /* dark complementary brown */
+    }
+    .info-box p {
+      font-size: 14px;
+      color: #4e342e;
+    }
+    .attendance-number {
+      font-size: 32px;
+      font-weight: bold;
+      margin-top: 5px;
+    }
+    /* Attendance Heatmap Box */
+    .heatmap-box {
+      grid-column: 1 / -1;
+      background: linear-gradient(135deg, #ffcc80, #ffab91, #ce93d8, #81d4fa);
+      border: 2px solid #4db6ac;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      text-align: center;
+      margin-right: 100px;
+      margin-left: 100px;
+    }
+    .heatmap-box h2 {
+      font-size: 20px;
+      margin-bottom: 10px;
+      color: #212121;
+    }
+    .month-name {
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #424242;
+    }
+    /* Calendar Styles */
+    .calendar {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    .calendar th, .calendar td {
+      border: 1px solid #fff;
+      padding: 6px;
+      font-size: 12px;
+    }
+    .calendar th {
+      color: #000;
+    }
+    /* Multi-colored headers using more than 3 colors */
+    .calendar th:nth-child(1) { background-color: #ff8a80; }
+    .calendar th:nth-child(2) { background-color: #ff80ab; }
+    .calendar th:nth-child(3) { background-color: #ea80fc; }
+    .calendar th:nth-child(4) { background-color: #b388ff; }
+    .calendar th:nth-child(5) { background-color: #8c9eff; }
+    .calendar th:nth-child(6) { background-color: #80d8ff; }
+    .calendar th:nth-child(7) { background-color: #84ffff; }
+    .calendar td {
+      background-color: #eceff1;
+      color: #000;
+    }
+    .calendar .present {
+      background-color: #279a2d;
+      color: #fff;
+      font-weight: bold;
+    }
+    .calendar .absent {
+      background-color: #ef5350;
+      color: #fff;
+      font-weight: bold;
+    }
+    /* RIGHT SECTION */
+    .right-section {
+      width: 25%;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-left: 10px;
+    }
+    .side-box {
+      background-color: #ffd180;
+      border: 2px solid #81c784;
+      border-radius: 8px;
+      padding: 10px;
+      height: 300px;
+      overflow: hidden;
+      color: #4e342e;
+    }
+    .side-box h2 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+    /* Left-align content in marquee containers */
+    .marquee-container {
+      text-align: left;
+    }
+    .marquee-container ul {
+      list-style: disc inside;
+      margin-left: 5px;
+      font-size: 14px;
+      text-decoration: none;
+    }
+    .marquee-container ul li {
+      margin-bottom: 8px;
+    }
+    .marquee-container ul li a {
+      color: #4e342e;
+      text-decoration: underline;
+    }
+    .marquee-container ul li a:hover {
+      color: #000;
+    }
+  </style>
+</head>
+<body>
+  <!-- Updated Header -->
+  <header>
+    <h1 class="dashboard-heading">PROJECT Z STUDENT DASHBOARD</h1>
+    <div class="header-image">
+      <img src="https://i.ibb.co/0yGDqKz9/logo.png" alt="Profile Image" />
+    </div>
+  </header>
+  
+  <header2>
+    <!-- Updated Student Details and Roll No -->
+    <a href="#" class="student-info-btn">Alice Kumar IT 2<sup>nd</sup> Year Sec B 123456</a>
+  </header2>
+  
+  <!-- Main Container -->
+  <div class="main-container">
+    <!-- Left Section -->
+    <div class="left-section">
+      <!-- Attendance Box with Updated Attendance Percentage -->
+      <div class="info-box" id="attendanceBox">
+        <h2>Attendance</h2>
+        <div class="attendance-number" id="attendanceValue">100%</div>
+      </div>
+      <!-- Give Attendance Box -->
+      <div class="info-box give-attendance-box" style="cursor: pointer;">
+        <h2>Give Attendance</h2>
+        <p>Click here to mark your attendance.</p>
+      </div>
+      <!-- Upcoming Class Box -->
+      <div class="info-box upcoming-class-box">
+        <h2>Upcoming Class</h2>
+        <p>Next class as per schedule.</p>
+      </div>
+      <!-- Attendance Heatmap Box -->
+      <div class="heatmap-box">
+        <h2>Attendance Heatmap</h2>
+        <div class="month-name">August 2023</div>
+        <table class="calendar">
+          <thead>
+            <tr>
+              <th>Su</th>
+              <th>Mo</th>
+              <th>Tu</th>
+              <th>We</th>
+              <th>Th</th>
+              <th>Fr</th>
+              <th>Sa</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td></td>
+              <td></td>
+              <td class="present">1</td>
+              <td class="absent">2</td>
+              <td class="present">3</td>
+              <td class="present">4</td>
+              <td class="absent">5</td>
+            </tr>
+            <tr>
+              <td class="present">6</td>
+              <td class="present">7</td>
+              <td class="present">8</td>
+              <td class="absent">9</td>
+              <td class="present">10</td>
+              <td class="absent">11</td>
+              <td class="present">12</td>
+            </tr>
+            <tr>
+              <td class="absent">13</td>
+              <td class="present">14</td>
+              <td class="present">15</td>
+              <td class="present">16</td>
+              <td class="absent">17</td>
+              <td class="present">18</td>
+              <td class="present">19</td>
+            </tr>
+            <tr>
+              <td class="present">20</td>
+              <td class="absent">21</td>
+              <td class="present">22</td>
+              <td class="present">23</td>
+              <td class="present">24</td>
+              <td class="absent">25</td>
+              <td class="present">26</td>
+            </tr>
+            <tr>
+              <td class="present">27</td>
+              <td class="present">28</td>
+              <td class="absent">29</td>
+              <td class="present">30</td>
+              <td class="present">31</td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+    <!-- Right Section -->
+    <div class="right-section">
+      <!-- EVENTS Section -->
+      <div class="side-box">
+        <h2>EVENTS</h2>
+        <div class="marquee-container">
+          <marquee behavior="scroll" direction="up" scrollamount="2" style="height:250px;">
+            <ul>
+              <li><a href="#" style="text-decoration: none;">XYZ EVENT</a></li>
+              <li><a href="#" style="text-decoration: none;">MNOP HACKATHON</a></li>
+              <li><a href="#" style="text-decoration: none;">JK EVENT</a></li>
+              <li><a href="#" style="text-decoration: none;">GH HACKATHON</a></li>
+            </ul>
+          </marquee>
+        </div>
+      </div>
+      <!-- ANNOUNCEMENTS Section -->
+      <div class="side-box">
+        <h2>ANNOUNCEMENTS</h2>
+        <div class="marquee-container">
+          <marquee behavior="scroll" direction="up" scrollamount="2" style="height:250px;">
+            <ul>
+              <li>New guidelines for lab submissions.</li>
+              <li>Holiday on Friday.</li>
+              <li>Mid-semester exams next week.</li>
+              <li>Library hours extended.</li>
+            </ul>
+          </marquee>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    const attendanceBox = document.getElementById('attendanceBox');
+    const attendanceValueElement = document.getElementById('attendanceValue');
+    
+    function updateAttendanceColor() {
+      // Remove any percent sign and whitespace, then parse the number
+      const text = attendanceValueElement.textContent.replace('%', '').trim();
+      const numericValue = parseInt(text, 10);
+      if (!isNaN(numericValue)) {
+        if (numericValue >= 75) {
+          attendanceBox.style.backgroundColor = '#66bb6a'; // green
+          attendanceBox.style.color = '#fff';
+        } else if (numericValue >= 50) {
+          attendanceBox.style.backgroundColor = '#ffeb3b'; // yellow
+          attendanceBox.style.color = '#000';
+        } else {
+          attendanceBox.style.backgroundColor = '#ef5350'; // red
+          attendanceBox.style.color = '#fff';
+        }
+      }
+    }
+    
+    // Initial update
+    updateAttendanceColor();
+    
+    // Observe changes to the attendance text
+    const observer = new MutationObserver(updateAttendanceColor);
+    observer.observe(attendanceValueElement, { childList: true, subtree: true });
+  </script>
+</body>
+</html>

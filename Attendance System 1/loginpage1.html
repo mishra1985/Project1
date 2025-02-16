@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project Z Attendance System</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #000;
+      font-family: Arial, sans-serif;
+    }
+    /* Main Heading */
+    .main-wrapper {
+      text-align: center;
+      margin: 20px 0;
+    }
+    .main-heading {
+      color: white;
+      font-size: 40px;
+      margin: 0;
+    }
+    /* Container for Both Boxes */
+    .container-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+      gap: 100px; /* gap between boxes */
+      margin: 40px auto;
+      max-width: 900px;
+    }
+    /* Shared Box Style */
+    .box {
+      width: 350px;
+      background: rgb(255, 211, 181);
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      min-height: 500px;
+      display: flex;
+      flex-direction: column;
+    }
+    /* Left Box: Role Options */
+    .left-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    .left-container .left-heading {
+      font-size: 24px;
+      margin-bottom: 20px;
+      color: #000;
+    }
+    .left-container .role-btn {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      background-color: #666;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .left-container .role-btn:hover {
+      background-color: #555;
+    }
+    /* Right Box: Login Form */
+    .login-container {
+      text-align: center;
+    }
+    .login-container img {
+      display: block;
+      width: 150px;
+      margin: 0 auto 20px;
+      border-radius: 10px; /* Rounded edges for image */
+    }
+    .login-container input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .login-btn {
+      width: 100%;
+      padding: 10px;
+      background-color: #A9746E;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 10px;
+    }
+    .login-btn:hover {
+      background-color: #1e90ff;
+    }
+    .forgot-password {
+      display: block;
+      margin: 10px 0;
+      color: #1877f2;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    .forgot-password:hover {
+      text-decoration: underline;
+    }
+    .divider {
+      margin: 15px 0;
+      border-bottom: 1px solid #ccc;
+    }
+    .create-account {
+      background-color: #D4A76A;
+      padding: 10px;
+      border-radius: 5px;
+      color: white;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: bold;
+      margin-top: 10px;
+      display: inline-block;
+    }
+    .create-account:hover {
+      background-color: #36a420;
+    }
+  </style>
+</head>
+<body>
+  <!-- Main Heading -->
+  <div class="main-wrapper">
+    <h1 class="main-heading">Project Z Login Page</h1>
+  </div>
+  <!-- Container for Left & Right Boxes -->
+  <div class="container-wrapper">
+    <!-- Left Box -->
+    <div class="box left-container">
+      <h2 class="left-heading">Login As</h2>
+      <button class="role-btn" data-role="Student">Student</button>
+      <button class="role-btn" data-role="Educator">Educator</button>
+      <button class="role-btn" data-role="Hod">Hod</button>
+      <button class="role-btn" data-role="Admin">Admin</button>
+    </div>
+    <!-- Right Box -->
+    <div class="box login-container">
+      <img src="https://i.ibb.co/0yGDqKz9/logo.png" alt="Project Z logo">
+      <h2 id="login-heading">Log in as Student</h2>
+      <form method="POST" action="login.php">
+        <input type="text" name="email" placeholder="Email or phone number" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <button type="submit" class="login-btn">Log In</button>
+      </form>
+      <a href="#" class="forgot-password">Forgotten password?</a>
+      <div class="divider"></div>
+      <a href="#" class="create-account">Create New Account</a>
+    </div>
+  </div>
+  <script>
+    // Update the login box heading based on the role button clicked
+    const roleButtons = document.querySelectorAll('.role-btn');
+    const loginHeading = document.getElementById('login-heading');
+
+    roleButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const role = button.getAttribute('data-role');
+        let headingText = '';
+
+        switch (role) {
+          case 'Student':
+            headingText = 'Log in as Student';
+            break;
+          case 'Educator':
+            headingText = 'Log in as Educator';
+            break;
+          case 'Hod':
+            headingText = 'Log in as Head of Department';
+            break;
+          case 'Admin':
+            headingText = 'Log in as Administrator';
+            break;
+          default:
+            headingText = 'Log in';
+        }
+        loginHeading.textContent = headingText;
+      });
+    });
+  </script>
+</body>
+</html>
